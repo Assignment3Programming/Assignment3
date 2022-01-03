@@ -116,14 +116,7 @@ def placing_order(temp):
 
     #print out shopping cart
     if len(shopping_cart) != 0:
-        print('Here is you current shopping cart')
-        
-        index = 1
-        for item_id in shopping_cart:
-            print(index,') ','name:',items[item_id]['name'], 'id:',item_id,'quantity:',shopping_cart[item_id])
-            index += 1
-        print('Total price: ',price)
-
+        show_current_shopping_cart(1)
         #confirm customer information
         print('Please let us take some information')
         name = input('What is your name? ')
@@ -144,7 +137,7 @@ def placing_order(temp):
         main('else')
     else:
         print('Your current shopping cart is empty')
-        answer = input('Would you like to add something to your cart? (Y/N)')
+        answer = input('Would you like to add something to your cart? (Y/N)\n')
         if answer.lower() == 'y':
             buy_request(1)
             
@@ -156,20 +149,20 @@ def buy_request(temp):
     list_item(1)
     print('Above are the currently products of our store')
     while True:
-        id = input('Please select Id of the product that you want to purchase: ')
+        id = input('Please select Id of the product that you want to purchase: \n')
         if id in items:
             try:
-                amount = int(input('How many of this product do you want ? '))
+                amount = int(input('How many of this product do you want ? \n'))
                 while amount > items[id]['amount']:
                     print('We only have ', items[id]['amount'],' of this product left, please select the amount again')
-                    amount = int(input('How many of this product do you want ? '))
+                    amount = int(input('How many of this product do you want ? \n'))
                 items[id]['amount'] -= amount
                 shopping_cart[id] = amount
                 print("Your order has been added to cart!")
-                choice = input('Do you want to continue buying ? (Y/N)')
+                choice = input('Do you want to continue buying ? (Y/N)\n')
                 if choice.lower() == 'y':
                     continue
-                print('To complete the order go to placing order section.')
+                print('To complete the order go to placing order section.\n')
                 break
             except ValueError:
                 pass
@@ -178,7 +171,19 @@ def buy_request(temp):
             break
     if(temp != 1):
         main('else')
-    
+
+def show_current_shopping_cart(temp):
+    if(len(shopping_cart) !=0):
+        print('Here is you current shopping cart')
+        index = 1
+        for item_id in shopping_cart:
+            print(index,') ','name:',items[item_id]['name'], 'id:',item_id,'quantity:',shopping_cart[item_id])
+            index += 1
+        print('Total price: ',price)
+    else:
+        print('Your cart is empty!')
+    if temp !=1:
+        main('else')
 
 #update resources and customers informations
 def update_information(i,c):
@@ -228,8 +233,9 @@ def understand_order(order):
         5: list_info_customer,
         6 : placing_order,
         7: buy_request,
-        8 : reports_section,
-        9 : end
+        8: show_current_shopping_cart,
+        9 : reports_section,
+        10 : end
     }
     return order_list.get(order)
 
@@ -253,12 +259,10 @@ shopping_cart = {}
 price = 0
 
 def main(s):
-    
-    
     while True:
         try:
             order = int(input('What '+s+' can we help ? (Choose a number in our instructions)\n'))
-            if  order <=9 and order >=1:    
+            if  order <=10 and order >=1:    
                 break
             else:
                 print('Sorry we are not understand your order')
@@ -270,13 +274,14 @@ def main(s):
 
 print('Welcome to our book store!')
 print('Here are our instructions\n')
-print("""1: list_item, 
-2: list_info_product,
-3: search_by_name,
-4: search_by_id,
-5: list_info_customer,
-6: placing_order,
-7: add item to cart, 
-8: reports section,
-9: end\n""")
+print("""1: list_item,
+2: list_info_product
+3: search_by_name
+4: search_by_id
+5: list_info_customer
+6: placing_order
+7: add item to cart
+8: current shopping cart
+9: reports section
+10: end\n""")
 main('')
