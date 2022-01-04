@@ -90,7 +90,6 @@ def search_by_id(temp):
         main('else')
     
 
-#CAO SON
 def list_info_customer(temp):
     while True:
         customer_id = input("Please type customer ID:\n")
@@ -113,7 +112,6 @@ def list_info_customer(temp):
     main('else')
 
 def placing_order(temp): 
-
     #print out shopping cart
     if len(shopping_cart) != 0:
         show_current_shopping_cart(1)
@@ -124,15 +122,28 @@ def placing_order(temp):
         email_address = input('What is your email address? ')
         phone_number = input('What is your phone number? ')
         #customer information
-        
         customers[current_customer_id]['name'] = name
         customers[current_customer_id]['address'] = address
         customers[current_customer_id]['email'] = email_address
         customers[current_customer_id]['phone'] = phone_number
         customers[current_customer_id]['purchased'] = shopping_cart
-        update_information(items,customers)
+
+        #shipping methods
+
+
+
+        ############
+
+
         print('Your order has been queued!')
         print('Thank you for shopping with us!')
+
+        #update resources after complete the order
+        update_information(items,customers)
+
+
+
+       
     
         main('else')
     else:
@@ -154,21 +165,30 @@ def buy_request(temp):
             try:
                 amount = int(input('How many of this product do you want ? \n'))
                 while amount > items[id]['amount']:
-                    print('We only have ', items[id]['amount'],' of this product left, please select the amount again')
+                    print('We only have', items[id]['amount'],'of this product left, please select the amount again')
                     amount = int(input('How many of this product do you want ? \n'))
+
+                #update current item quantity
                 items[id]['amount'] -= amount
+
+                #update current cart price
+                price[0] += items[id]['price']*amount
                 shopping_cart[id] = amount
                 print("Your order has been added to cart!")
                 choice = input('Do you want to continue buying ? (Y/N)\n')
                 if choice.lower() == 'y':
                     continue
-                print('To complete the order go to placing order section.\n')
+                print('To complete the order, please go to placing order section.')
+                print('*Please note that the order will not be execute if you do not placing it in the placing order section !')
                 break
             except ValueError:
-                pass
+                print('Sorry we do not understand your order!')
+                break
+                
         else:
             print('The Id of the product that you are looking for is not exist')
             break
+            
     if(temp != 1):
         main('else')
 
@@ -179,7 +199,7 @@ def show_current_shopping_cart(temp):
         for item_id in shopping_cart:
             print(index,') ','name:',items[item_id]['name'], 'id:',item_id,'quantity:',shopping_cart[item_id])
             index += 1
-        print('Total price: ',price)
+        print('Total price: ',price[0])
     else:
         print('Your cart is empty!')
     if temp !=1:
@@ -256,7 +276,7 @@ customers[current_customer_id] = {
 }
 
 shopping_cart = {}
-price = 0
+price = [0]
 
 def main(s):
     while True:
@@ -267,6 +287,7 @@ def main(s):
             else:
                 print('Sorry we are not understand your order')
         except  ValueError:
+            print('Sorry we are not understand your order')
             pass
         
     understand_order(order)(0)
@@ -274,13 +295,13 @@ def main(s):
 
 print('Welcome to our book store!')
 print('Here are our instructions\n')
-print("""1: list_item,
+print("""1: list_item
 2: list_info_product
 3: search_by_name
 4: search_by_id
 5: list_info_customer
 6: placing_order
-7: add item to cart
+7: buy item
 8: current shopping cart
 9: reports section
 10: end\n""")
