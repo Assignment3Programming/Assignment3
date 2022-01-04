@@ -1,6 +1,22 @@
 from datetime import date
 import json
 
+#global variables
+with open('items.json', 'r') as f:
+    items = json.load(f)
+with open('customers.json', 'r') as f:
+    customers = json.load(f)
+
+current_customer_id = str(len(customers))
+customers[current_customer_id] = {
+    'name': '',
+    'address': '',
+    'email': '',
+    'phone': '',
+    'purchased': {}
+}
+shopping_cart = {}
+price = [0]
 
 # 6 main features
 def list_item(temp):
@@ -14,6 +30,7 @@ def list_item(temp):
 
 def list_info_product(temp):
 
+    #dict to call function
     acceptable = {
         'n': search_by_name,
         'N': search_by_name,
@@ -288,7 +305,6 @@ def voucher_promotion(temp):
         main('else')
 
 
-# REPORT
 def reports_section(temp):
     with open('reports.json', 'r') as f:
         reports = json.load(f)
@@ -324,6 +340,7 @@ def end(temp):
 
 
 def understand_order(order):
+    #dict to call function
     order_list = {
         1: list_item,
         2: list_info_product,
@@ -341,25 +358,21 @@ def understand_order(order):
     return order_list.get(order)
 
 
-# main function
-with open('items.json', 'r') as f:
-    items = json.load(f)
-with open('customers.json', 'r') as f:
-    customers = json.load(f)
-
-current_customer_id = str(len(customers))
-customers[current_customer_id] = {
-    'name': '',
-    'address': '',
-    'email': '',
-    'phone': '',
-    'purchased': {}
-}
-
-
-shopping_cart = {}
-price = [0]
-
+def welcome():
+    print('Welcome to our book store!')
+    print('Here are our instructions\n')
+    print("""1: list item
+2: list product information
+3: search by name
+4: search by id
+5: list customer information
+6: placing order
+7: buy item
+8: current shopping cart
+9: shipping methods
+10: voucher promotion
+11: reports section
+12: end\n""")
 
 def main(s):
     while True:
@@ -373,22 +386,7 @@ def main(s):
         except ValueError:
             print('Sorry we are not understand your order')
             pass
-
     understand_order(order)(0)
 
-
-print('Welcome to our book store!')
-print('Here are our instructions\n')
-print("""1: list item
-2: list product information
-3: search by name
-4: search by id
-5: list customer information
-6: placing order
-7: buy item
-8: current shopping cart
-9: shipping methods
-10: voucher promotion
-11: reports section
-12: end\n""")
+welcome()
 main('')
