@@ -1,8 +1,26 @@
 from datetime import date
+
 import json
 
+#global variables
+with open('items.json', 'r') as f:
+    items = json.load(f)
+with open('customers.json', 'r') as f:
+    customers = json.load(f)
 
-# 6 main features
+current_customer_id = str(len(customers))
+customers[current_customer_id] = {
+    'name': '',
+    'address': '',
+    'email': '',
+    'phone': '',
+    'purchased': {}
+}
+shopping_cart = {}
+price = [0]
+
+
+# 6 MAIN FEATURES
 def list_item(temp):
     for id in items:
         print(id, ':', items[id]['name'])
@@ -14,6 +32,7 @@ def list_item(temp):
 
 def list_info_product(temp):
 
+    #dict to call function
     acceptable = {
         'n': search_by_name,
         'N': search_by_name,
@@ -115,23 +134,26 @@ def list_info_customer(temp):
 
 
 def placing_order(temp):
-    # print out shopping cart
+
+    #check whether the cart is empty
     if len(shopping_cart) != 0:
+
+        # print out shopping cart
         show_current_shopping_cart(1)
+
         # confirm customer information
         print('Please let us take some information')
         name = input('What is your name? ')
         address = input('What is your address? ')
         email_address = input('What is your email address? ')
         phone_number = input('What is your phone number? ')
-        # customer information
         customers[current_customer_id]['name'] = name
         customers[current_customer_id]['address'] = address
         customers[current_customer_id]['email'] = email_address
         customers[current_customer_id]['phone'] = phone_number
         customers[current_customer_id]['purchased'] = shopping_cart
 
-        #voucher and promotions
+        #PROMOTIONS
         promo_check = False
         if price[0] >= 1000000:
             price[0] = round(price[0]*4/5)
@@ -142,6 +164,7 @@ def placing_order(temp):
             print('Your order is applying the Second promotion of our store')
             promo_check = True
         else:
+            #check whether this is the first time customer
             first_time = True
             for id in customers:
                 if id == current_customer_id:
@@ -156,9 +179,8 @@ def placing_order(temp):
         if promo_check:
             print('Total price after sale:', price[0])
 
-        # shipping methods
+        #SHIPPING METHODS
         while True:
-            try:
                 shipping_method = {
                     "1": 30000,
                     "2": 50000,
@@ -174,18 +196,20 @@ def placing_order(temp):
                 customers[current_customer_id]['paid'] = price[0]
                 break
 
-            except ValueError:
-                pass
-
         # final announcement
         print('Total price with shipping cost includes is: ', price[0])
         print('Your order has been queued!\nWe will try our best to contact you as soon as possible!')
         print('Thank you for shopping with us!')
 
         # update resources after complete the order
-        update_information(items, customers)
+        with open('items.json', 'w') as f:
+            json.dump(items, f)
+        with open('customers.json', 'w') as f:
+            json.dump(customers, f)
 
+        #back to the main function
         main('else')
+
     else:
         print('Your current shopping cart is empty')
         answer = input('Would you like to add something to your cart? (Y/N)\n')
@@ -194,14 +218,7 @@ def placing_order(temp):
         else:
             main('else')
 
-# update resources and customers informations
 
-
-def update_information(i, c):
-    with open('items.json', 'w') as f:
-        json.dump(i, f)
-    with open('customers.json', 'w') as f:
-        json.dump(c, f)
 
 # other feature
 
@@ -288,7 +305,6 @@ def voucher_promotion(temp):
         main('else')
 
 
-# REPORT
 def reports_section(temp):
     with open('reports.json', 'r') as f:
         reports = json.load(f)
@@ -323,7 +339,26 @@ def end(temp):
     print("Thank you for shopping with us!")
 
 
+
+
+def welcome():
+    print('Welcome to our book store!')
+    print('Here are our instructions\n')
+    print("""1: list item
+2: list product information
+3: search by name
+4: search by id
+5: list customer information
+6: placing order
+7: buy item
+8: current shopping cart
+9: shipping methods
+10: voucher promotion
+11: reports section
+12: end\n""")
+
 def understand_order(order):
+    #dict to call function
     order_list = {
         1: list_item,
         2: list_info_product,
@@ -341,26 +376,6 @@ def understand_order(order):
     return order_list.get(order)
 
 
-# main function
-with open('items.json', 'r') as f:
-    items = json.load(f)
-with open('customers.json', 'r') as f:
-    customers = json.load(f)
-
-current_customer_id = str(len(customers))
-customers[current_customer_id] = {
-    'name': '',
-    'address': '',
-    'email': '',
-    'phone': '',
-    'purchased': {}
-}
-
-
-shopping_cart = {}
-price = [0]
-
-
 def main(s):
     while True:
         try:
@@ -373,22 +388,7 @@ def main(s):
         except ValueError:
             print('Sorry we are not understand your order')
             pass
-
     understand_order(order)(0)
 
-
-print('Welcome to our book store!')
-print('Here are our instructions\n')
-print("""1: list item
-2: list product information
-3: search by name
-4: search by id
-5: list customer information
-6: placing order
-7: buy item
-8: current shopping cart
-9: shipping methods
-10: voucher promotion
-11: reports section
-12: end\n""")
+welcome()
 main('')
