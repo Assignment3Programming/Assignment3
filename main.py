@@ -2,7 +2,7 @@ from datetime import date
 
 import json
 
-#global variables
+#GLOBAL VARIABLES
 with open('items.json', 'r') as f:
     items = json.load(f)
 with open('customers.json', 'r') as f:
