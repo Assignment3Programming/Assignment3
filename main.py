@@ -326,12 +326,14 @@ def reports_section(temp):
             json.dump(reports, f)
         print('Thanks for your report!')
 
-    else:
+    elif choice =='2':
         for report_id in reports:
             print('report id: ', report_id)
             print('problem:', reports[report_id]['issues'])
             print('customer name: ', reports[report_id]['name'])
             print('phone number: ', reports[report_id]['phone'], '\n')
+    else:
+        print('Your choice is invalid')
     main('else')
 
 
