@@ -304,7 +304,7 @@ def voucher_promotion(temp):
     if temp == 0:
         main('else')
 
-
+#CAO SONN
 def reports_section(temp):
     with open('reports.json', 'r') as f:
         reports = json.load(f)
