@@ -2,7 +2,7 @@ from datetime import date
 
 import json
 
-#GLOBAL VARIABLES
+# GLOBAL VARIABLES
 with open('items.json', 'r') as f:
     items = json.load(f)
 with open('customers.json', 'r') as f:
@@ -22,17 +22,26 @@ price = [0]
 
 # 6 MAIN FEATURES
 def list_item(temp):
+    """
+    To show list of available items in the store
+    :param temp
+    :return: nothing
+    """
     for id in items:
         print(id, ':', items[id]['name'])
     print('')
     if temp == 1:
         return
-    main('else')
+    main('else ')
 
 
 def list_info_product(temp):
-
-    #dict to call function
+    """
+    To show a product's information based on the input ID or name of product
+    :param temp
+    :return: nothing
+    """
+    # dict to call function
     acceptable = {
         'n': search_by_name,
         'N': search_by_name,
@@ -42,75 +51,92 @@ def list_info_product(temp):
 
     while True:
         search_type = input(
-            'Would you like to view the product information by id or name ? (I/N)\n')
+            'Would you like to view the product information by ID or name ? (I/N)\n')
         if search_type in acceptable:
             check, type_of_search, result = acceptable[search_type](1)
             if check:
                 if type_of_search == 'name':
                     for id in items:
-                        if items[id]['name'] == result and items[id]['amount'] > 0:
+                        if items[id]['name'] == result and items[id]['quantity'] > 0:
+                            print('name :', items[id]['name'])
                             print('id :', id)
                             print('author :', items[id]['author'])
-                            print('amount :', items[id]['amount'])
+                            print('quantity :', items[id]['quantity'])
                             print('price :', items[id]['price'])
                 else:
+                    print('name :', items[result]['name'])
                     print('id :', result)
                     print('author :', items[result]['author'])
-                    print('amount :', items[result]['amount'])
+                    print('quantity :', items[result]['quantity'])
                     print('price :', items[result]['price'])
             break
-    main('else')
+    main('else ')
 
 
 def search_by_name(temp):
+    """
+    To show a product's information based on the input name of product
+    :param temp:
+    :return: nothing
+    """
     book_name = input('What is the name of the book ?\n')
     check = False
     for id in items:
-        if items[id]['name'] == book_name and items[id]['amount'] > 0:
+        if items[id]['name'] == book_name and items[id]['quantity'] > 0:
             check = True
             print('The book you are looking for is available')
-            if(temp != 1):
+            if (temp != 1):
                 print('id :', id)
                 print('author :', items[id]['author'])
-                print('amount :', items[id]['amount'])
+                print('quantity :', items[id]['quantity'])
                 print('price :', items[id]['price'])
 
     if not check:
-        print('The book you are looking for is not available')
+        print('The book you are looking for is currently unavailable')
     if temp == 1:
         return check, 'name', book_name
     else:
-        main('else')
+        main('else ')
 
 
 def search_by_id(temp):
+    """
+    To show a product's information based on the input ID of product
+    :param temp:
+    :return: nothing
+    """
     result = 0
     check = False
     try:
-        id = input('What is the id of the book ? \n')
+        id = input('What is the ID of the book ? \n')
         if id in items:
             check = True
             print('The book you are looking for is available')
-            if(temp != 1):
+            if (temp != 1):
                 print('id :', id)
                 print('author :', items[id]['author'])
-                print('amount :', items[id]['amount'])
+                print('quantity :', items[id]['quantity'])
                 print('price :', items[id]['price'])
         else:
             check = False
-            print('The book you are looking for is not available')
+            print('The book you are looking for is currently unavailable')
         if temp == 1:
             return check, 'id', id
-        main('else')
+        main('else ')
     except ValueError:
         check = False
-        print('You have typed wrong or the id do not exist')
+        print('You have typed incorrectly or the id does not exist')
         if temp == 1:
             return check, 'id', result
-        main('else')
+        main('else ')
 
 
 def list_info_customer(temp):
+    """
+    To show the customer information based on input customer ID
+    :param temp:
+    :return:
+    """
     while True:
         customer_id = input("Please type customer ID:\n")
         if customer_id == 'end':
@@ -127,15 +153,20 @@ def list_info_customer(temp):
                 print('id:', item_id, ' name :', items[item_id]['name'],
                       ' quantities :', customers[customer_id]['purchased'][item_id])
         else:
-            print('You have typed wrong or the id do not exist')
+            print('You have typed incorrectly or the ID does not exist')
         break
 
-    main('else')
+    main('else ')
 
 
 def placing_order(temp):
+    """
+    To check out with all items currently in shopping cart, calculate total prices taking into account the shipment method and promotion. At the same time, store user's information in local database and update the remaining quantity of products
+    :param temp
+    :return: nothing
+    """
 
-    #check whether the cart is empty
+    # check whether the cart is empty
     if len(shopping_cart) != 0:
 
         # print out shopping cart
@@ -153,18 +184,18 @@ def placing_order(temp):
         customers[current_customer_id]['phone'] = phone_number
         customers[current_customer_id]['purchased'] = shopping_cart
 
-        #PROMOTIONS
+        # PROMOTIONS
         promo_check = False
         if price[0] >= 1000000:
-            price[0] = round(price[0]*4/5)
-            print('Your order is applying the Third promotion of our store')
+            price[0] = round(price[0] * 4 / 5)
+            print('the Third promotion has been applied to your order')
             promo_check = True
         elif price[0] >= 500000:
-            price[0] = round(price[0]*9/10)
-            print('Your order is applying the Second promotion of our store')
+            price[0] = round(price[0] * 9 / 10)
+            print('the Second promotion has been applied to your order')
             promo_check = True
         else:
-            #check whether this is the first time customer
+            # check whether this is the first time customer
             first_time = True
             for id in customers:
                 if id == current_customer_id:
@@ -173,33 +204,32 @@ def placing_order(temp):
                     first_time = False
                     break
             if first_time:
-                price[0] = round(price[0]*9/10)
-                print('Your order is applying the First promotion of our store')
+                price[0] = round(price[0] * 9 / 10)
+                print('the First promotion has been applied to your order')
                 promo_check = True
         if promo_check:
-            print('Total price after sale:', price[0])
+            print('Total price after promotion:', price[0])
 
-        #SHIPPING METHODS
+        # SHIPPING METHODS
         while True:
-                shipping_method = {
-                    "1": 30000,
-                    "2": 50000,
-                    "3": 100000,
-                }
-                # call function
-                show_shipping_methods(1)
-                shipping_choice = input(
-                    'What shipping method you would like to use? (1,2,3) ')
-                if shipping_choice not in shipping_method:
-                    continue
-                price[0] += shipping_method[shipping_choice]
-                customers[current_customer_id]['paid'] = price[0]
-                break
+            shipping_method = {
+                "1": 30000,
+                "2": 50000,
+                "3": 100000,
+            }
+            # call function
+            show_shipping_methods(1)
+            shipping_choice = input(
+                'What shipping method would you like to use? (1,2,3) ')
+            if shipping_choice not in shipping_method:
+                continue
+            price[0] += shipping_method[shipping_choice]
+            customers[current_customer_id]['paid'] = price[0]
+            break
 
         # final announcement
-        print('Total price with shipping cost includes is: ', price[0])
+        print('Total price with shipping cost included is: ', price[0])
         print('Your order has been queued!\nWe will try our best to contact you as soon as possible!')
-        print('Thank you for shopping with us!')
 
         # update resources after complete the order
         with open('items.json', 'w') as f:
@@ -207,8 +237,8 @@ def placing_order(temp):
         with open('customers.json', 'w') as f:
             json.dump(customers, f)
 
-        #back to the main function
-        main('else')
+        # back to the main function
+        main('else ')
 
     else:
         print('Your current shopping cart is empty')
@@ -216,46 +246,48 @@ def placing_order(temp):
         if answer.lower() == 'y':
             buy_request(1)
         else:
-            main('else')
-
+            main('else ')
 
 
 # other feature
 
-
 def buy_request(temp):
+    """
+    To add chosen items in the shopping cart
+    :param temp
+    :return: nothing
+    """
     list_item(1)
-    print('Above are the currently products of our store')
+    print('Above are the currently available products in our store')
     while True:
         id = input(
             'Please select Id of the product that you want to purchase: \n')
         if id in items:
             try:
-                amount = int(
+                quantity = int(
                     input('How many of this product do you want ? \n'))
-                if amount <= 0:
+                if quantity <= 0:
                     print('Invalid value')
                     continue
-                while amount > items[id]['amount']:
-                    print('We only have', items[id]['amount'],
-                          'of this product left, please select the amount again')
-                    amount = int(
+                while quantity > items[id]['quantity']:
+                    print('We only have', items[id]['quantity'],
+                          'of this product left, please select the quantity again')
+                    quantity = int(
                         input('How many of this product do you want ? \n'))
 
                 # update current item quantity
-                items[id]['amount'] -= amount
+                items[id]['quantity'] -= quantity
 
                 # update current cart price
-                price[0] += items[id]['price']*amount
-                shopping_cart[id] = amount
+                price[0] += items[id]['price'] * quantity
+                shopping_cart[id] = quantity
                 print("Your order has been added to cart!")
                 choice = input('Do you want anything else? (Y/N)\n')
                 if choice.lower() == 'y':
                     continue
                 if temp != 1:
                     print('To complete the order, please go to placing order section.')
-                    print(
-                        '*Please note that the order will not be execute if you do not placing it in the placing order section !')
+                    print('*Please note that the order will not be executed if you do not place it in the placing order section !')
                     break
                 placing_order(temp)
             except ValueError:
@@ -263,16 +295,21 @@ def buy_request(temp):
                 break
 
         else:
-            print('The Id of the product that you are looking for is not exist')
+            print('The Id of the product that you are looking for does not exist')
             if temp != 1:
-                main('else')
-    if(temp != 1):
-        main('else')
+                main('else ')
+    if (temp != 1):
+        main('else ')
 
 
 def show_current_shopping_cart(temp):
-    if(len(shopping_cart) != 0):
-        print('Here is you current shopping cart')
+    """
+    To show all items currently in the shopping cart
+    :param temp
+    :return: nothing
+    """
+    if (len(shopping_cart) != 0):
+        print('Here is your current shopping cart')
         index = 1
         for item_id in shopping_cart:
             print(index, ') ', 'name:', items[item_id]['name'],
@@ -282,18 +319,29 @@ def show_current_shopping_cart(temp):
     else:
         print('Your cart is empty!')
     if temp != 1:
-        main('else')
+        main('else ')
 
 
 def show_shipping_methods(temp):
-    print('Our a store has 3 available shipping options \n1. Normal: 30000 (1-2 weeks)\n2.Fast:50000 (3-5 days)\n3.Rocket: 100000 (Same day delivery, Only accept if you are in Ha Noi)\n')
+    """
+    To show all available shipping method and their costs
+    :param temp
+    :return: nothing
+    """
+    print(
+        'Our store offers 3 available shipping options \n1. Normal: 30000 (1-2 weeks)\n2.Fast:50000 (3-5 days)\n3.Rocket: 100000 (Same day delivery, Only accept if you are in Ha Noi)\n')
     if temp != 1:
-        main('else')
+        main('else ')
 
 
 def voucher_promotion(temp):
+    """
+    To show information about all available promotions
+    :param temp
+    :return: nothing
+    """
     promotions = {
-        "1": '-10% Vouchers are applied to the first time customer come to our store (We base on clients phone number in our database))',
+        "1": '-10% Vouchers are applied to first time customers to our store (We base on clients phone number in our database))',
         "2": '-10% Off for customer with bills over 500.000 VND',
         "3": '-20% Off for customer with bills over 1.000.000 VND'
     }
@@ -302,10 +350,15 @@ def voucher_promotion(temp):
     print(promotions['3'])
     print('These promotions do not applied together at once')
     if temp == 0:
-        main('else')
+        main('else ')
 
-#CAO SONN
+
 def reports_section(temp):
+    """
+    To receive reports from customers or to show their report history
+    :param temp:
+    :return: nothing
+    """
     with open('reports.json', 'r') as f:
         reports = json.load(f)
     choice = input(
@@ -326,26 +379,32 @@ def reports_section(temp):
             json.dump(reports, f)
         print('Thanks for your report!')
 
-    elif choice =='2':
+    else:
         for report_id in reports:
             print('report id: ', report_id)
             print('problem:', reports[report_id]['issues'])
             print('customer name: ', reports[report_id]['name'])
             print('phone number: ', reports[report_id]['phone'], '\n')
-    else:
-        print('Your choice is invalid')
-    main('else')
+    main('else ')
 
 
 def end(temp):
+    """
+    To quit the purchasing session
+    :param temp
+    :return: nothing
+    """
     print("Thank you for shopping with us!")
 
 
-
+print('Welcome to our book store!\n')
 
 def welcome():
-    print('Welcome to our book store!')
-    print('Here are our instructions\n')
+    """
+    To start a purchasing session, give instructions to customers
+    :return: nothing
+    """
+    print('Here are our instructions:')
     print("""1: list item
 2: list product information
 3: search by name
@@ -359,8 +418,14 @@ def welcome():
 11: reports section
 12: end\n""")
 
+
 def understand_order(order):
-    #dict to call function
+    """
+    To determine which action to make according to customers' request
+    :param order: a number that implies a request
+    :return: call the respective function to execute a request
+    """
+    # dict to call function
     order_list = {
         1: list_item,
         2: list_info_product,
@@ -379,18 +444,23 @@ def understand_order(order):
 
 
 def main(s):
+    """
+    To prompt request from customers, pass it to understand_order function
+    :param s: a string to complete the message to customers after each request being fulfilled
+    :return: nothing
+    """
+    welcome()
     while True:
         try:
             order = int(
-                input('What '+s+' can we help ? (Choose a number in our instructions)\n'))
+                input('What ' + s + 'can we help ? (Choose a number in our instructions)\n'))
             if order <= 12 and order >= 1:
                 break
             else:
-                print('Sorry we are not understand your order')
+                print('Sorry we do not understand your order')
         except ValueError:
-            print('Sorry we are not understand your order')
+            print('Sorry we do not understand your order')
             pass
     understand_order(order)(0)
 
-welcome()
 main('')
