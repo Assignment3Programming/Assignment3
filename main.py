@@ -1,4 +1,4 @@
-from datetime import date
+
 
 import json
 
@@ -21,20 +21,25 @@ price = [0]
 
 
 # 6 MAIN FEATURES
+
+
+#NGUYEN HUY CAO SON 1
 def list_item(temp):
     """
     To show list of available items in the store
     :param temp
     :return: nothing
     """
+    print('Here are books that we currently have')
     for id in items:
-        print(id, ':', items[id]['name'])
+        print('id:',id, ',','name:', items[id]['name'])
     print('')
     if temp == 1:
         return
     main('else ')
 
 
+#NGUYEN THANH HUNG 2
 def list_info_product(temp):
     """
     To show a product's information based on the input ID or name of product
@@ -73,6 +78,7 @@ def list_info_product(temp):
     main('else ')
 
 
+#NGUYEN THANH HUNG 3
 def search_by_name(temp):
     """
     To show a product's information based on the input name of product
@@ -84,7 +90,7 @@ def search_by_name(temp):
     for id in items:
         if items[id]['name'] == book_name and items[id]['quantity'] > 0:
             check = True
-            print('The book you are looking for is available')
+            print('The book you are looking for is available\n')
             if (temp != 1):
                 print('id :', id)
                 print('author :', items[id]['author'])
@@ -92,13 +98,14 @@ def search_by_name(temp):
                 print('price :', items[id]['price'])
 
     if not check:
-        print('The book you are looking for is currently unavailable')
+        print('The book you are looking for is currently unavailable\n')
     if temp == 1:
         return check, 'name', book_name
     else:
         main('else ')
 
 
+#NGUYEN THANH HUNG 4
 def search_by_id(temp):
     """
     To show a product's information based on the input ID of product
@@ -116,21 +123,22 @@ def search_by_id(temp):
                 print('id :', id)
                 print('author :', items[id]['author'])
                 print('quantity :', items[id]['quantity'])
-                print('price :', items[id]['price'])
+                print('price :', items[id]['price'],'\n')
         else:
             check = False
-            print('The book you are looking for is currently unavailable')
+            print('The book you are looking for is currently unavailable\n')
         if temp == 1:
             return check, 'id', id
         main('else ')
     except ValueError:
         check = False
-        print('You have typed incorrectly or the id does not exist')
+        print('You have typed incorrectly or the id does not exist\n')
         if temp == 1:
             return check, 'id', result
         main('else ')
 
 
+#HO NGUYEN DUC ANH 5
 def list_info_customer(temp):
     """
     To show the customer information based on input customer ID
@@ -144,11 +152,11 @@ def list_info_customer(temp):
             return
         if customer_id in customers:
             print('id :', customer_id)
-            print('customer name :', customers[customer_id]['name'])
-            print('customer address :', customers[customer_id]['address'])
-            print('customer email address :', customers[customer_id]['email'])
-            print('customer phone number :', customers[customer_id]['phone'])
-            print('customer purchased :')
+            print('name :', customers[customer_id]['name'])
+            print('address :', customers[customer_id]['address'])
+            print('email address :', customers[customer_id]['email'])
+            print('phone number :', customers[customer_id]['phone'])
+            print('purchased :')
             for item_id in customers[customer_id]['purchased']:
                 print('id:', item_id, ' name :', items[item_id]['name'],
                       ' quantities :', customers[customer_id]['purchased'][item_id])
@@ -159,6 +167,7 @@ def list_info_customer(temp):
     main('else ')
 
 
+#NGUYEN THANH HUNG 6
 def placing_order(temp):
     """
     To check out with all items currently in shopping cart, calculate total prices taking into account the shipment method and promotion. At the same time, store user's information in local database and update the remaining quantity of products
@@ -207,8 +216,8 @@ def placing_order(temp):
                 price[0] = round(price[0] * 9 / 10)
                 print('the First promotion has been applied to your order')
                 promo_check = True
-        if promo_check:
-            print('Total price after promotion:', price[0])
+
+        
 
         # SHIPPING METHODS
         while True:
@@ -228,7 +237,10 @@ def placing_order(temp):
             break
 
         # final announcement
+        if promo_check:
+            print('Total price after promotion:', price[0])
         print('Total price with shipping cost included is: ', price[0])
+        print('Your customer id is: ',current_customer_id)
         print('Your order has been queued!\nWe will try our best to contact you as soon as possible!')
 
         # update resources after complete the order
@@ -248,16 +260,17 @@ def placing_order(temp):
         else:
             main('else ')
 
-
 # other feature
 
+#NGUYEN THANH HUNG 7
 def buy_request(temp):
     """
     To add chosen items in the shopping cart
     :param temp
     :return: nothing
     """
-    list_item(1)
+    for item_id in items:
+        print('id:',item_id,'name:',items[item_id]['name'],'price',items[item_id]['price'],'quantity:',items[item_id]['quantity'])
     print('Above are the currently available products in our store')
     while True:
         id = input(
@@ -301,7 +314,7 @@ def buy_request(temp):
     if (temp != 1):
         main('else ')
 
-
+#DUONG MINH DUC 8 
 def show_current_shopping_cart(temp):
     """
     To show all items currently in the shopping cart
@@ -322,6 +335,7 @@ def show_current_shopping_cart(temp):
         main('else ')
 
 
+#DUONG MINH DUC 9 
 def show_shipping_methods(temp):
     """
     To show all available shipping method and their costs
@@ -334,6 +348,7 @@ def show_shipping_methods(temp):
         main('else ')
 
 
+#HO NGUYEN DUC ANH 10
 def voucher_promotion(temp):
     """
     To show information about all available promotions
@@ -351,6 +366,10 @@ def voucher_promotion(temp):
     print('These promotions do not applied together at once')
     if temp == 0:
         main('else ')
+
+
+#NGUYEN HUY CAO SON 11
+
 
 
 def reports_section(temp):
@@ -373,21 +392,22 @@ def reports_section(temp):
             'name': name,
             'phone': phone
         }
-
         # update reports file
         with open('reports.json', 'w') as f:
             json.dump(reports, f)
         print('Thanks for your report!')
-
-    else:
+    elif choice =='2':
         for report_id in reports:
             print('report id: ', report_id)
             print('problem:', reports[report_id]['issues'])
             print('customer name: ', reports[report_id]['name'])
             print('phone number: ', reports[report_id]['phone'], '\n')
+    else:
+        print('We do not under stand your order!')
     main('else ')
 
 
+#NGUYEN HUY CAO SON 12
 def end(temp):
     """
     To quit the purchasing session
@@ -396,6 +416,9 @@ def end(temp):
     """
     print("Thank you for shopping with us!")
 
+
+
+#****************************************************************************************************#
 
 print('Welcome to our book store!\n')
 
@@ -449,7 +472,7 @@ def main(s):
     :param s: a string to complete the message to customers after each request being fulfilled
     :return: nothing
     """
-    welcome()
+    
     while True:
         try:
             order = int(
@@ -463,4 +486,6 @@ def main(s):
             pass
     understand_order(order)(0)
 
+
+welcome()
 main('')

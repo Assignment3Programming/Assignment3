@@ -1,1 +1,122 @@
-{"1": {"name": "sach1", "author": "Hung", "quantity": 8, "price": 100000}, "2": {"name": "sach2", "author": "Hung", "quantity": 12, "price": 100000}, "3": {"name": "sach3", "author": "Hung", "quantity": 18, "price": 100000}, "4": {"name": "sach4", "author": "Hung", "quantity": 15, "price": 100000}, "5": {"name": "sach5", "author": "Hung", "quantity": 14, "price": 100000}, "6": {"name": "sach6", "author": "Hung", "quantity": 13, "price": 100000}, "7": {"name": "sach7", "author": "Hung", "quantity": 12, "price": 100000}, "8": {"name": "sach8", "author": "Hung", "quantity": 13, "price": 100000}, "9": {"name": "sach9", "author": "Hung", "quantity": 20, "price": 100000}, "10": {"name": "sach10", "author": "Hung", "quantity": 15, "price": 100000}, "11": {"name": "sach11", "author": "Hung", "quantity": 10, "price": 100000}, "12": {"name": "sach12", "author": "Hung", "quantity": 10, "price": 100000}, "13": {"name": "sach13", "author": "Hung", "quantity": 9, "price": 100000}, "14": {"name": "sach14", "author": "Hung", "quantity": 13, "price": 100000}, "15": {"name": "sach15", "author": "Hung", "quantity": 17, "price": 100000}, "16": {"name": "sach16", "author": "Hung", "quantity": 15, "price": 100000}, "17": {"name": "sach17", "author": "Hung", "quantity": 14, "price": 100000}, "18": {"name": "sach18", "author": "Hung", "quantity": 11, "price": 100000}, "19": {"name": "sach19", "author": "Hung", "quantity": 12, "price": 100000}, "20": {"name": "sach20", "author": "Hung", "quantity": 13, "price": 100000}}
+{
+    "1": {
+        "name": "sach1",
+        "author": "Hung",
+        "quantity": 80,
+        "price": 100000
+    },
+    "2": {
+        "name": "sach2",
+        "author": "Huy",
+        "quantity": 120,
+        "price": 120000
+    },
+    "3": {
+        "name": "sach3",
+        "author": "Hung",
+        "quantity": 120,
+        "price": 140000
+    },
+    "4": {
+        "name": "sach4",
+        "author": "Huy",
+        "quantity": 150,
+        "price": 160000
+    },
+    "5": {
+        "name": "sach5",
+        "author": "Son",
+        "quantity": 140,
+        "price": 120000
+    },
+    "6": {
+        "name": "sach6",
+        "author": "Son",
+        "quantity": 130,
+        "price": 100000
+    },
+    "7": {
+        "name": "sach7",
+        "author": "Son",
+        "quantity": 120,
+        "price": 120000
+    },
+    "8": {
+        "name": "sach8",
+        "author": "Son",
+        "quantity": 130,
+        "price": 120000
+    },
+    "9": {
+        "name": "sach9",
+        "author": "Duc Anh",
+        "quantity": 200,
+        "price": 150000
+    },
+    "10": {
+        "name": "sach10",
+        "author": "Duc Anh",
+        "quantity": 150,
+        "price": 140000
+    },
+    "11": {
+        "name": "sach11",
+        "author": "Duc Anh",
+        "quantity": 100,
+        "price": 180000
+    },
+    "12": {
+        "name": "sach12",
+        "author": "Hung",
+        "quantity": 90,
+        "price": 200000
+    },
+    "13": {
+        "name": "sach13",
+        "author": "Duc Anh",
+        "quantity": 90,
+        "price": 200000
+    },
+    "14": {
+        "name": "sach14",
+        "author": "Hung",
+        "quantity": 130,
+        "price": 150000
+    },
+    "15": {
+        "name": "sach15",
+        "author": "Duc Anh",
+        "quantity": 170,
+        "price": 125000
+    },
+    "16": {
+        "name": "sach16",
+        "author": "Minh Duc",
+        "quantity": 150,
+        "price": 140000
+    },
+    "17": {
+        "name": "sach17",
+        "author": "Minh Duc",
+        "quantity": 140,
+        "price": 150000
+    },
+    "18": {
+        "name": "sach18",
+        "author": "Minh Duc",
+        "quantity": 80,
+        "price": 120000
+    },
+    "19": {
+        "name": "sach19",
+        "author": "Minh Duc",
+        "quantity": 120,
+        "price": 120000
+    },
+    "20": {
+        "name": "sach20",
+        "author": "Minh Duc",
+        "quantity": 130,
+        "price": 130000
+    }
+}

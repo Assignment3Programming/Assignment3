@@ -1,0 +1,7 @@
+Nguyen Thanh Hung: funtion numbers(2,3,4,6,7)
+
+Nguyen Huy Cao Son: function numbers(1,11,12) 
+
+Ho Nguyen Duc Anh: function numbers(5,10), included docstring to the program
+
+Duong Minh Duc: function numbers(8,9), edit presentation video.
